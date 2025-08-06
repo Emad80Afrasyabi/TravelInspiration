@@ -1,4 +1,4 @@
-@HostAddressRoot = http://localhost:5110
+@HostAddressRoot = https://localhost:7207
 
 GET {{HostAddressRoot}}/destinations?searchFor=a
 Accept: application/json
