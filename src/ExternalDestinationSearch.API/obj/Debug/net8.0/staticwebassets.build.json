@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "JRZbYykk02MYds6O6yzO9xOlwwfYRyj4tjTSt4AWwsU=",
+  "Source": "ExternalDestinationSearch.API",
+  "BasePath": "_content/ExternalDestinationSearch.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

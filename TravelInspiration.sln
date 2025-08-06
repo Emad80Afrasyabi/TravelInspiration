@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalDestinationSearch.API", "src\ExternalDestinationSearch.API\ExternalDestinationSearch.API.csproj", "{465B4184-3E84-4F98-BCF5-22F984D7B55D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelInspiration.API", "src\TravelInspiration.API\TravelInspiration.API.csproj", "{8600BBFB-968C-4227-A223-DDA86118B5C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{465B4184-3E84-4F98-BCF5-22F984D7B55D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{465B4184-3E84-4F98-BCF5-22F984D7B55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{465B4184-3E84-4F98-BCF5-22F984D7B55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{465B4184-3E84-4F98-BCF5-22F984D7B55D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8600BBFB-968C-4227-A223-DDA86118B5C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8600BBFB-968C-4227-A223-DDA86118B5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8600BBFB-968C-4227-A223-DDA86118B5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8600BBFB-968C-4227-A223-DDA86118B5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
