@@ -1,2 +1,21 @@
-@HostAddressRoot = http://localhost:5158
+@HostAddressRoot = https://localhost:7295
 
+GET {{HostAddressRoot}}/api/destinations?searchFor=a
+Accept: application/json
+
+###
+
+GET {{HostAddressRoot}}/api/destinations
+Accept: application/json
+
+###
+GET {{HostAddressRoot}}/api/itineraries?searchFor=Paris
+Accept: application/json
+
+###
+GET {{HostAddressRoot}}/api/itineraries/1/stops
+Accept: application/json
+
+###
+GET {{HostAddressRoot}}/api/itineraries/1111/stops
+Accept: application/json 

@@ -1,12 +1,16 @@
 using TravelInspiration.API;
+using TravelInspiration.API.Features.Destinations;
+using TravelInspiration.API.Features.Itineraries;
+using TravelInspiration.API.Features.Stops;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
+builder.Services.AddProblemDetails();
 builder.Services.AddHttpClient();
    
 builder.Services.RegisterApplicationServices();
-builder.Services.RegisterPersistenceServices();
+builder.Services.RegisterPersistenceServices(builder.Configuration);
 
 WebApplication app = builder.Build();
 
@@ -17,5 +21,9 @@ if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 else app.UseExceptionHandler();
 
 app.UseStatusCodePages();
+
+SearchDestinations.AddEndpoint(app);
+GetItineraries.AddEndpoint(app); 
+GetStops.AddEndpoint(app);
 
 app.Run();
