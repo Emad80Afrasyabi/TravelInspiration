@@ -34,3 +34,4 @@ D:\Personal\TravelInspiration\src\ExternalDestinationSearch.API\obj\Debug\net8.0
 D:\Personal\TravelInspiration\src\ExternalDestinationSearch.API\obj\Debug\net8.0\ExternalDestinationSearch.API.pdb
 D:\Personal\TravelInspiration\src\ExternalDestinationSearch.API\obj\Debug\net8.0\ExternalDestinationSearch.API.genruntimeconfig.cache
 D:\Personal\TravelInspiration\src\ExternalDestinationSearch.API\obj\Debug\net8.0\ref\ExternalDestinationSearch.API.dll
+D:\Personal\TravelInspiration\src\ExternalDestinationSearch.API\obj\Debug\net8.0\ExternalDestinationSearch.API.sourcelink.json

@@ -171,3 +171,5 @@ D:\Personal\TravelInspiration\src\TravelInspiration.API\obj\Debug\net8.0\refint\
 D:\Personal\TravelInspiration\src\TravelInspiration.API\obj\Debug\net8.0\TravelInspiration.API.pdb
 D:\Personal\TravelInspiration\src\TravelInspiration.API\obj\Debug\net8.0\TravelInspiration.API.genruntimeconfig.cache
 D:\Personal\TravelInspiration\src\TravelInspiration.API\obj\Debug\net8.0\ref\TravelInspiration.API.dll
+D:\Personal\TravelInspiration\src\TravelInspiration.API\bin\Debug\net8.0\MediatR.dll
+D:\Personal\TravelInspiration\src\TravelInspiration.API\bin\Debug\net8.0\MediatR.Contracts.dll

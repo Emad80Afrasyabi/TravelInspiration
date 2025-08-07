@@ -1,30 +1,41 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Domain.Entities;
 using TravelInspiration.API.Shared.Persistence;
+using TravelInspiration.API.Shared.Slices;
 
 namespace TravelInspiration.API.Features.Itineraries;
 
-public static class GetItineraries
-{
-    public static void AddEndpoint(IEndpointRouteBuilder app)
+public sealed class GetItineraries : ISlice
+{ 
+    public void AddEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        app.MapGet(pattern: "api/itineraries", async (string? searchFor, 
-                                                      ILoggerFactory logger, 
-                                                      TravelInspirationDbContext dbContext,
-                                                      IMapper mapper,
-                                                      CancellationToken cancellationToken) =>
+        endpointRouteBuilder.MapGet(pattern: "api/itineraries", (string? searchFor, 
+                                                                 ILoggerFactory logger,     
+                                                                 IMediator mediator,
+                                                                 CancellationToken cancellationToken) =>
             {
                 logger.CreateLogger(categoryName: "EndpointHandlers").LogInformation("GetItineraries feature called.");
 
-                List<Itinerary> result = await dbContext.Itineraries.Where(itinerary => searchFor == null || 
-                                                                                        itinerary.Name.Contains(searchFor) ||
-                                                                                        (itinerary.Description != null && itinerary.Description.Contains(searchFor))).ToListAsync(cancellationToken);
-
-                return Results.Ok(mapper.Map<IEnumerable<ItineraryDto>>(await dbContext.Itineraries.Where(itinerary => searchFor == null ||
-                                                                                                                       itinerary.Name.Contains(searchFor) ||
-                                                                                                                       (itinerary.Description != null && itinerary.Description.Contains(searchFor))).ToListAsync(cancellationToken)));
+                return mediator.Send(new GetItinerariesQuery(searchFor), cancellationToken);
             });
+    }
+
+    public sealed class GetItinerariesQuery(string? searchFor) : IRequest<IResult>
+    {
+        public string? SearchFor { get; } = searchFor;
+    } 
+
+    public sealed class GetItinerariesHandler(TravelInspirationDbContext dbContext, IMapper mapper) : IRequestHandler<GetItinerariesQuery, IResult>
+    {
+        public async Task<IResult> Handle(GetItinerariesQuery request, CancellationToken cancellationToken)
+        {
+            return Results.Ok(mapper.Map<IEnumerable<ItineraryDto>>(await dbContext.Itineraries.Where(itinerary =>
+                                                                    request.SearchFor == null ||
+                                                                    itinerary.Name.Contains(request.SearchFor) ||
+                                                                    (itinerary.Description != null && itinerary.Description.Contains(request.SearchFor))).ToListAsync(cancellationToken))); 
+        }
     }
 
     public sealed class ItineraryDto

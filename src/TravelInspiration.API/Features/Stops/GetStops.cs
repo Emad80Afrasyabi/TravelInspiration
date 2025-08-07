@@ -1,27 +1,41 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Domain.Entities;
 using TravelInspiration.API.Shared.Persistence;
+using TravelInspiration.API.Shared.Slices;
 
 namespace TravelInspiration.API.Features.Stops;
 
-public static class GetStops
+public sealed class GetStops : ISlice
 {
-    public static void AddEndpoint(IEndpointRouteBuilder app)
+    public void AddEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        app.MapGet(pattern: "api/itineraries/{itineraryId}/stops", async (int itineraryId,
-                                                                          ILoggerFactory logger,
-                                                                          TravelInspirationDbContext dbContext,
-                                                                          IMapper mapper,
-                                                                          CancellationToken cancellationToken) =>
+        endpointRouteBuilder.MapGet(pattern: "api/itineraries/{itineraryId}/stops", (int itineraryId,
+                                                                                     ILoggerFactory logger, 
+                                                                                     IMediator mediator,
+                                                                                     CancellationToken cancellationToken) =>
             {
                 logger.CreateLogger(categoryName: "EndpointHandlers").LogInformation("GetStops feature called.");
 
-                Itinerary? itinerary = await dbContext.Itineraries.Include(navigationPropertyPath: itinerary => itinerary.Stops)
-                                                                  .FirstOrDefaultAsync(itinerary => itinerary.Id == itineraryId, cancellationToken);
-
-                return itinerary == null ? Results.NotFound() : Results.Ok(mapper.Map<IEnumerable<StopDto>>(itinerary.Stops));
+                 return mediator.Send(new GetStopsQuery(itineraryId), cancellationToken); 
             });
+    }
+
+    public sealed class GetStopsQuery(int itineraryId) : IRequest<IResult>
+    {
+        public int ItineraryId { get; } = itineraryId;
+    }
+
+    public sealed class GetStopsHandler(TravelInspirationDbContext dbContext, IMapper mapper) : IRequestHandler<GetStopsQuery, IResult>
+    {
+        public async Task<IResult> Handle(GetStopsQuery request, CancellationToken cancellationToken)
+        {
+            Itinerary? itinerary = await dbContext.Itineraries.Include(navigationPropertyPath: itinerary => itinerary.Stops)
+                                                              .FirstOrDefaultAsync(itinerary => itinerary.Id == request.ItineraryId, cancellationToken);
+
+            return itinerary == null ? Results.NotFound() : Results.Ok(mapper.Map<IEnumerable<StopDto>>(itinerary.Stops));
+        }
     }
 
     public sealed class StopDto

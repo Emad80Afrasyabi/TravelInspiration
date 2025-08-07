@@ -11,6 +11,15 @@ public sealed class TravelInspirationDbContext(DbContextOptions<TravelInspiratio
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        SeedData(modelBuilder);
+        
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TravelInspirationDbContext).Assembly);
+        
+        base.OnModelCreating(modelBuilder);
+    }
+
+    private static void SeedData(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<Itinerary>().HasData(
             new Itinerary("A Trip to Paris", "dummyuserid")
             {
@@ -76,10 +85,6 @@ public sealed class TravelInspirationDbContext(DbContextOptions<TravelInspiratio
                 CreatedBy = "DATASEED",
                 CreatedOn = new DateTime(2025, 8, 6, 0, 0, 0, DateTimeKind.Utc)
             });
-
-        
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TravelInspirationDbContext).Assembly);
-        base.OnModelCreating(modelBuilder);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

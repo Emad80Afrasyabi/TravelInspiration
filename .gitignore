@@ -365,3 +365,84 @@ FodyWeavers.xsd
 .idea/
 
 .config/
+
+# .NET Core specific
+*.swp
+*.swo
+*~
+
+# Entity Framework Core
+*.db
+*.db-shm
+*.db-wal
+
+# User secrets
+secrets.json
+appsettings.Development.json
+
+# Local configuration files
+appsettings.Local.json
+appsettings.*.Local.json
+
+# IDE specific files
+.vscode/
+*.code-workspace
+
+# Docker
+.dockerignore
+Dockerfile.local
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+
+# Performance profiling
+*.diagsession
+
+# SQLite databases (if you use them)
+*.db
+*.sqlite
+*.sqlite3
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
