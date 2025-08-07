@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Networking;
 using TravelInspiration.API.Shared.Persistence;
 using AutoMapper;
+using TravelInspiration.API.Shared.Behaviours;
+using TravelInspiration.API.Shared.Metrics;
 using TravelInspiration.API.Shared.Slices;
 
 namespace TravelInspiration.API;
@@ -29,10 +31,14 @@ public static class ServiceCollectionExtensions
             return config.CreateMapper();
         });
         
-        services.AddMediatR(serviceConfiguration =>
+        services.AddMediatR(cfg =>
         {
-            serviceConfiguration.RegisterServicesFromAssemblies(currentAssembly);
+            cfg.RegisterServicesFromAssemblies(currentAssembly)
+               .AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>))
+               .AddOpenBehavior(typeof(HandlerPerformanceMetricBehaviour<,>));
         });
+        
+        services.AddSingleton<HandlerPerformanceMetric>();
         
         return services;
     }
