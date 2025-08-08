@@ -29,3 +29,12 @@ Content-Type: application/json
   "name": "A stop for testing",
   "imageUri": "https://localhost:7120/images/stopfortesting.jpg"
 }
+
+###
+PUT {{HostAddressRoot}}/api/itineraries/1/stops/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "An updated name"
+}

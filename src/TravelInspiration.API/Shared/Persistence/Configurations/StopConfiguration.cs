@@ -9,11 +9,13 @@ public sealed class StopConfiguration : IEntityTypeConfiguration<Stop>
     public void Configure(EntityTypeBuilder<Stop> builder)
     {
         builder.ToTable("Stops");
-        builder.Property(s => s.Id).UseIdentityColumn();
-        builder.Property(s => s.Name).IsRequired().HasMaxLength(200);
-        builder.HasOne(s => s.Itinerary)
-               .WithMany(i => i.Stops)
-               .HasForeignKey(s => s.ItineraryId)
+        builder.Property(stop => stop.Id).UseIdentityColumn();
+        builder.Property(stop => stop.Name).IsRequired().HasMaxLength(200);
+        builder.HasOne(stop => stop.Itinerary)
+               .WithMany(itinerary => itinerary.Stops)
+               .HasForeignKey(stop => stop.ItineraryId)
                .OnDelete(DeleteBehavior.Cascade);
+        builder.Ignore(stop => stop.DomainEvents);
+        builder.Property(stop => stop.Suggested).HasDefaultValue(false);
     }
 }

@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using TravelInspiration.API.Shared.Domain;
 using TravelInspiration.API.Shared.Domain.Entities;
+using TravelInspiration.API.Shared.DomainEvents;
 
 namespace TravelInspiration.API.Shared.Persistence;
 
-public sealed class TravelInspirationDbContext(DbContextOptions<TravelInspirationDbContext> options) : DbContext(options)
+public sealed class TravelInspirationDbContext(DbContextOptions<TravelInspirationDbContext> options, IPublisher publisher) : DbContext(options)
 {
     public DbSet<Itinerary> Itineraries => Set<Itinerary>();
     public DbSet<Stop> Stops => Set<Stop>();
@@ -87,7 +90,7 @@ public sealed class TravelInspirationDbContext(DbContextOptions<TravelInspiratio
             });
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
         {
@@ -105,7 +108,19 @@ public sealed class TravelInspirationDbContext(DbContextOptions<TravelInspiratio
                     break;
             }
         }
+        
+        DomainEvent[] domainEvents = ChangeTracker.Entries<IHasDomainEvent>()
+                                                  .Select(entityEntry => entityEntry.Entity.DomainEvents)
+                                                  .SelectMany(events => events)
+                                                  .Where(domainEvent => !domainEvent.IsPublished)
+                                                  .ToArray();
 
-        return base.SaveChangesAsync(cancellationToken);
+        foreach (DomainEvent domainEvent in domainEvents)
+        {
+            await publisher.Publish(domainEvent, cancellationToken);
+            domainEvent.IsPublished = true;
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }
