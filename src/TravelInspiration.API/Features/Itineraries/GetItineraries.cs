@@ -28,7 +28,7 @@ public sealed class GetItineraries : ISlice
             return Results.Ok(mapper.Map<IEnumerable<ItineraryDto>>(await dbContext.Itineraries.Where(itinerary =>
                                                                     request.SearchFor == null ||
                                                                     itinerary.Name.Contains(request.SearchFor) ||
-                                                                    (itinerary.Description != null && itinerary.Description.Contains(request.SearchFor))).ToListAsync(cancellationToken))); 
+                                                                    (itinerary.Description != null && itinerary.Description.Contains(request.SearchFor))).AsNoTracking().ToListAsync(cancellationToken))); 
         }
     }
 

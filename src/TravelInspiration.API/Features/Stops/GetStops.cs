@@ -26,6 +26,7 @@ public sealed class GetStops : ISlice
         public async Task<IResult> Handle(GetStopsQuery request, CancellationToken cancellationToken)
         {
             Itinerary? itinerary = await dbContext.Itineraries.Include(navigationPropertyPath: itinerary => itinerary.Stops)
+                                                              .AsNoTracking()
                                                               .FirstOrDefaultAsync(itinerary => itinerary.Id == request.ItineraryId, cancellationToken);
 
             return itinerary == null ? Results.NotFound() : Results.Ok(mapper.Map<IEnumerable<StopDto>>(itinerary.Stops));

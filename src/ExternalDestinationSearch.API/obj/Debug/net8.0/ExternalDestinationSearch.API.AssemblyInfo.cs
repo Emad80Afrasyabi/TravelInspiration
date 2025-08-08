@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExternalDestinationSearch.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64f4e734729f1722c6b6845da182a911e4d055a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b14decd3d2677b5324e55899776ef78fafc999c4")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExternalDestinationSearch.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExternalDestinationSearch.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
